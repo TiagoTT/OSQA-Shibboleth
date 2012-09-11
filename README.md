@@ -16,18 +16,20 @@ OSQA code base starting point was fantasy-island-0.9.0-beta3 obtained from the o
 
 ### Authentication module
 
-I read the other authentication modules, found in:
-    forum_modules/
+This is how I started:
 
-I read the authentication process code, found in:
-    forum/views/auth.py
+1. I read the other authentication modules, found in:
+    `forum_modules/`
 
-I have added a directory for this new module and placed an empty init file:
-    forum_modules/shibbolethauth/
-    forum_modules/shibbolethauth/__init__.py
+2. I read the authentication process code, found in:
+    `forum/views/auth.py`
 
-Then I coded the authentication module itself in:
-    forum_modules/shibbolethauth/authentication.py
+3. I have added a directory for this new module and placed an empty init file:
+    `forum_modules/shibbolethauth/`
+    `forum_modules/shibbolethauth/__init__.py`
+
+4. Then I coded the authentication module itself in:
+    `forum_modules/shibbolethauth/authentication.py`
 
 This is how the module operates:
 1. The module checks for the Shibboleth session ID variable, and proceeds if it is present.
@@ -43,13 +45,13 @@ The user still has to click the "login" link to authenticate, but instead of loa
 Then the authentication module checks the HTTP Shibboleth session headers and a new session is created.  
 
 The login URL was changed in file:
-    forum/urls.py
+    `forum/urls.py`
 
 I looked for `account sign in` and found the line:
-    url(r'^%s%s$' % (_('account/'), _('signin/')), app.auth.signin_page, name='auth_signin'),
+    `url(r'^%s%s$' % (_('account/'), _('signin/')), app.auth.signin_page, name='auth_signin'),`
 
 Which I replaced with:
-    url(r'^%s%s$' % (_('account/'), _('signin/')), 'django.views.generic.simple.redirect_to', {'url': '/account/shibboleth/signin'}, name='auth_signin'),
+    `url(r'^%s%s$' % (_('account/'), _('signin/')), 'django.views.generic.simple.redirect_to', {'url': '/account/shibboleth/signin'}, name='auth_signin'),`
 
 
 ## Install and use
@@ -66,8 +68,8 @@ It is assumed that you already have:
 ### Put the module in place
 
 Place the module inside the application root directory:
-    cd osqa_root_dir
-    cp -r /tmp/osqa-shibboleth/forum_modules/shibbolethauth/ forum_modules/
+    `cd osqa_root_dir`
+    `cp -r /tmp/osqa-shibboleth/forum_modules/shibbolethauth/ forum_modules/`
 
 ### Adjust the names of the Shibboleth HTTP header variables
 
@@ -77,14 +79,14 @@ In my case these were the names of the relevant Shibboleth variables:
 * `HTTP_SSOCONTACTMAIL` - the user's email address
 
 Most likely, you will need to edit the code adjust these.
-    vim forum_modules/shibbolethauth/authentication.py
+    `vim forum_modules/shibbolethauth/authentication.py`
 
 ### Adjust login URL
 
 If you are using exactly the same release I did:
-    cp /tmp/osqa-shibboleth/forum/urls.py forum/urls.py
+    `cp /tmp/osqa-shibboleth/forum/urls.py forum/urls.py`
 
 Otherwise, perform the steps described in "Login URL change" manually:
-    vim forum/urls.py
+    `vim forum/urls.py`
 
-
+# Good luck!
