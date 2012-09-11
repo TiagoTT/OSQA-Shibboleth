@@ -50,14 +50,14 @@ I didn't make the authentication transparent. The user still has to click the "l
 The login URL was changed in file:  
     `forum/urls.py`
 
-I looked for `account sign in` and found the line:  
+I looked for `account/signin` and found the line:  
     `url(r'^%s%s$' % (_('account/'), _('signin/')), app.auth.signin_page, name='auth_signin'),`
 
 Which I replaced with:  
-    `url(r'^%s%s$' % (_('account/'), _('signin/')),
+    ```url(r'^%s%s$' % (_('account/'), _('signin/')),
     'django.views.generic.simple.redirect_to',
     {'url': '/account/shibboleth/signin'},
-    name='auth_signin'),`
+    name='auth_signin'),```
 
 
 ## Install and use
