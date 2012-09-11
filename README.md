@@ -54,7 +54,10 @@ I looked for `account sign in` and found the line:
     `url(r'^%s%s$' % (_('account/'), _('signin/')), app.auth.signin_page, name='auth_signin'),`
 
 Which I replaced with:  
-    `url(r'^%s%s$' % (_('account/'), _('signin/')), 'django.views.generic.simple.redirect_to', {'url': '/account/shibboleth/signin'}, name='auth_signin'),`
+    `url(r'^%s%s$' % (_('account/'), _('signin/')),
+    'django.views.generic.simple.redirect_to',
+    {'url': '/account/shibboleth/signin'},
+    name='auth_signin'),`
 
 
 ## Install and use
@@ -81,12 +84,12 @@ In my case these were the names of the relevant Shibboleth variables:
 * `HTTP_SSONAME` - the user's full name
 * `HTTP_SSOCONTACTMAIL` - the user's email address
 
-Most likely, you will need to edit the code adjust these.  
+Most likely, you will need to edit the code in order to adjust these.  
     `vim forum_modules/shibbolethauth/authentication.py`
 
 ### Adjust login URL
 
-If you are using exactly the same release I did:  
+If you are using exactly the same OSQA release I did, you can just copy my version of this file:  
     `cp /tmp/osqa-shibboleth/forum/urls.py forum/urls.py`
 
 Otherwise, perform the steps described in "Login URL change" manually:  
