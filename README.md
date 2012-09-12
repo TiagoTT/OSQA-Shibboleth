@@ -54,10 +54,12 @@ I looked for `account/signin` and found the line:
     `url(r'^%s%s$' % (_('account/'), _('signin/')), app.auth.signin_page, name='auth_signin'),`
 
 Which I replaced with:  
-```url(r'^%s%s$' % (_('account/'), _('signin/')),
+```
+url(r'^%s%s$' % (_('account/'), _('signin/')),
 'django.views.generic.simple.redirect_to',
 {'url': '/account/shibboleth/signin'},
-name='auth_signin'),```
+name='auth_signin'),
+```
 
 
 ## Install and use
